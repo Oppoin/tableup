@@ -24,7 +24,7 @@ const DataTable = ({data}) => {
         <TableRow>
           <TableHeaderColumn>ID</TableHeaderColumn>
           <TableHeaderColumn>Name</TableHeaderColumn>
-          <TableHeaderColumn>Status</TableHeaderColumn>
+          <TableHeaderColumn>Phone</TableHeaderColumn>
         </TableRow>
       </TableHeader>
       <TableBody
@@ -36,7 +36,7 @@ const DataTable = ({data}) => {
           <TableRow key={item.id}>
             <TableRowColumn>{item.id}</TableRowColumn>
             <TableRowColumn>{item.name}</TableRowColumn>
-            <TableRowColumn>{item.status}</TableRowColumn>
+            <TableRowColumn>{item.phone}</TableRowColumn>
           </TableRow>
         )}
 

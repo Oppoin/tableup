@@ -4,14 +4,29 @@ import {render} from 'react-dom';
 import TableUp from '../../src';
 import '../../css/tableup.css';
 
-import _data from './_data.js';
-
 class Demo extends Component {
+  state = {
+    users: [],
+  };
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(json => {
+      this.setState({
+        users: json
+      })
+    })
+    .catch(ex => {
+      console.error('parsing failed', ex);
+    });
+  }
+
   render() {
     return (
       <div>
         <TableUp
-          data={_data}
+          data={this.state.users}
         />
       </div>
     );
