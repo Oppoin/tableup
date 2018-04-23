@@ -106,7 +106,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const {classes } = props;
+  const {classes, searchEnabled } = props;
 
   const callSearchRequest = event => {
     const query = event.target.value;
@@ -122,6 +122,7 @@ let EnhancedTableToolbar = props => {
       >
         <Typography color="inherit" variant="title">TableUp</Typography>
         <div className={classes.spacer}></div>
+        {searchEnabled ?
         <form className={classNames(classes.container, classes.formContainer)} noValidate autoComplete="off">
             <TextField
               id="search"
@@ -142,6 +143,8 @@ let EnhancedTableToolbar = props => {
               onChange={callSearchRequest}
             />
           </form>
+          :
+          null }
       </Toolbar>
     </AppBar>
   );
@@ -171,13 +174,24 @@ class EnhancedTable extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    let {options} = props;
+    const defaultOptions = {
+      paging: true, 
+      rowsPerPageOptions: [2, 5, 10],
+      rowsPerPage: 5,
+      checkbox: true,
+      search: true
+    }
+
+    options = Object.assign({}, defaultOptions, options);
+
     this.state = {
       order: 'asc',
       orderBy: 'id',
       selected: [],
       data: [],
       page: 0,
-      rowsPerPage: 10,
+      ...options
     };
   }
 
@@ -226,14 +240,15 @@ class EnhancedTable extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { data, order, orderBy, selected, rowsPerPage, page, paging, rowsPerPageOptions, checkbox } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar 
           numSelected={selected.length}
-          onSearchChange={this.handleSearch} />
+          onSearchChange={this.handleSearch}
+          searchEnabled={this.state.search} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
@@ -257,7 +272,10 @@ class EnhancedTable extends React.Component {
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox">
+                    {checkbox ? 
                       <Checkbox checked={isSelected} />
+                    :
+                    null }
                     </TableCell>
                     <TableCell numeric>{n.id}</TableCell>
                     <TableCell padding="none">{n.name}</TableCell>
@@ -276,12 +294,12 @@ class EnhancedTable extends React.Component {
             </TableBody>
           </Table>
         </div>
-
+        {paging ? 
         <TablePagination
           component="div"
           count={data.length}
           rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[2,5,10]}
+          rowsPerPageOptions={rowsPerPageOptions}
           page={page}
           backIconButtonProps={{
             'aria-label': 'Previous Page',
@@ -292,6 +310,8 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+        :
+        null }
       </Paper>
     );
   }
