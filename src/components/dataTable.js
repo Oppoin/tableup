@@ -7,12 +7,17 @@ import Table, {
   TableCell,
   TableHead,
   TableRow,
+  TablePagination,
 } from 'material-ui/Table';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
 import { lighten } from 'material-ui/styles/colorManipulator';
+import TextField from 'material-ui/TextField';
+import AppBar from 'material-ui/AppBar';
+import { InputAdornment } from 'material-ui/Input';
+import SearchIcon from '@material-ui/icons/Search';
 
 
 const columnData = [
@@ -63,7 +68,8 @@ EnhancedTableHead.propTypes = {
 
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit,
   },
   highlight:
     theme.palette.type === 'light'
@@ -84,19 +90,60 @@ const toolbarStyles = theme => ({
   title: {
     flex: '0 0 auto',
   },
+  formContainer: {
+    flex: '1 2 100%'
+  },
+  textfield:{
+    backgroundColor:lighten(theme.palette.primary.main, 0.15),
+    padding: 2,
+    margin: 0,
+    borderRadius: 2,
+
+  },
+  textWhite: {
+    color: '#fff'
+  }
 });
 
 let EnhancedTableToolbar = props => {
   const {classes } = props;
 
+  const callSearchRequest = event => {
+    const query = event.target.value;
+    const {onSearchChange} = props;
+
+    onSearchChange(query);
+  }
+
   return (
-    <Toolbar
-      className={classNames(classes.root)}
-    >
-      <div className={classes.title}>
-        <Typography variant="title">TableUp</Typography>
-      </div>
-    </Toolbar>
+    <AppBar position="static">
+      <Toolbar
+        className={classNames(classes.root)}
+      >
+        <Typography color="inherit" variant="title">TableUp</Typography>
+        <div className={classes.spacer}></div>
+        <form className={classNames(classes.container, classes.formContainer)} noValidate autoComplete="off">
+            <TextField
+              id="search"
+              type="search"
+              placeholder="Search..."
+              className={classNames(classes.textfield)}
+              fullWidth={true}
+              InputProps={{
+                disableUnderline: true,
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                
+                style: {color: 'inherit'}
+              }}
+              onChange={callSearchRequest}
+            />
+          </form>
+      </Toolbar>
+    </AppBar>
   );
 };
 
@@ -161,6 +208,20 @@ class EnhancedTable extends React.Component {
     this.setState({ selected: newSelected });
   };
 
+  handleChangePage = (event, page) => {
+    this.setState({ page });
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value });
+  };
+
+  handleSearch = query => {
+    fetch(`https://jsonplaceholder.typicode.com/users/?q=${query}`)
+    .then(response => response.json())
+    .then(json => this.setState({data:json}))
+  }
+
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
@@ -170,7 +231,9 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar 
+          numSelected={selected.length}
+          onSearchChange={this.handleSearch} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
@@ -213,6 +276,22 @@ class EnhancedTable extends React.Component {
             </TableBody>
           </Table>
         </div>
+
+        <TablePagination
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[2,5,10]}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onChangePage={this.handleChangePage}
+          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
       </Paper>
     );
   }
