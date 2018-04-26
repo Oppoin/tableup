@@ -5,7 +5,7 @@ import tableConfig from './config/tableConfig';
 class App extends Component {
   render() {
     return (
-      <EnhancedTable options={tableConfig} />
+      <EnhancedTable options={window.tableConfig} />
     );
   }
 }

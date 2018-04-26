@@ -18,6 +18,9 @@ import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import { InputAdornment } from 'material-ui/Input';
 import SearchIcon from '@material-ui/icons/Search';
+import Button from 'material-ui/Button';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 
 
 const columnData = [
@@ -168,6 +171,10 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
+  notification: {
+    backgroundColor: '#fcf4c5',
+    textAlign: 'center'
+  }
 });
 
 class EnhancedTable extends React.Component {
@@ -186,6 +193,7 @@ class EnhancedTable extends React.Component {
     options = Object.assign({}, defaultOptions, options);
 
     this.state = {
+      menuOpen: false,
       order: 'asc',
       orderBy: 'id',
       selected: [],
@@ -223,11 +231,13 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage = (event, page) => {
-    this.setState({ page });
+    this.setState({ page, 
+                    selected: [] });
   };
 
   handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
+    this.setState({ rowsPerPage: event.target.value,
+                    selected: []   });
   };
 
   handleSearch = query => {
@@ -238,9 +248,45 @@ class EnhancedTable extends React.Component {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
+  handleMenuClick = event => {
+      this.setState({ menuOpen: !this.state.menuOpen });
+  };
+
+  handleMenuClose = () => {
+      this.setState({ menuOpen: false });
+  };
+
+  handleSelectAllClick = (event) => {
+    event.stopPropagation();
+    const checked = event.target.checked;
+    if (checked) {
+      const {rowsPerPage, page} = this.state;
+      this.setState({ selected: this.state.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => n.id) });
+      return;
+    }
+    this.setState({ selected: [] });
+  };
+
+  handleAllBtnClick = () => {
+    const {rowsPerPage, page} = this.state;
+    this.setState({ selected: this.state.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => n.id),
+                    menuOpen: false});
+  }
+
+  handleNoneBtnClick = () => {
+    this.setState({ selected: [],
+                    menuOpen: false });
+  }
+
+  handleDeleteClick = () => {
+    const {selected} = this.state;
+    alert('These items will be deleted: ' + selected);
+  }
+
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page, paging, rowsPerPageOptions, checkbox } = this.state;
+    const { data, order, orderBy, selected, rowsPerPage, page, paging, rowsPerPageOptions, checkbox, 
+      menuOpen } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
@@ -249,6 +295,44 @@ class EnhancedTable extends React.Component {
           numSelected={selected.length}
           onSearchChange={this.handleSearch}
           searchEnabled={this.state.search} />
+        <div>
+          <Button
+            onClick={this.handleMenuClick}
+            padding="checkbox"
+            buttonRef={node => {
+              this.anchorEl = node;
+            }}
+          >
+            <Checkbox indeterminate={selected.length > 0 && selected.length < rowsPerPage}
+                      checked={selected.length === rowsPerPage}
+                      onClick={this.handleSelectAllClick} />
+            <KeyboardArrowDown />
+          </Button>
+          <Button className={classes.button} color="secondary"
+                  onClick={this.handleDeleteClick}>
+            Delete
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={this.anchorEl}
+            open={menuOpen}
+            onClose={this.handleMenuClose}
+            anchorOrigin={{vertical: 'bottom'}}
+            getContentAnchorEl={null}
+          >
+            <MenuItem onClick={this.handleAllBtnClick}>All</MenuItem>
+            <MenuItem onClick={this.handleNoneBtnClick}>None</MenuItem>
+          </Menu>
+        </div>
+        <div className={classes.notification}>
+          {selected.length > 0 ? (
+            <Typography color="inherit" variant="subheading">
+              {selected.length} selected
+            </Typography>
+          ) : (
+            null
+          )}
+        </div>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
