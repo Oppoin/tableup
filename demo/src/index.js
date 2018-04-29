@@ -14,8 +14,21 @@ class Demo extends Component {
     .then(response => response.json())
     .then(json => {
       this.setState({
-        users: json
-      })
+        users: json,
+      });
+    })
+    .catch(ex => {
+      console.error('parsing failed', ex);
+    });
+  }
+
+  handleQuerySeach = query => {
+    fetch(`https://jsonplaceholder.typicode.com/users?q=${query}`)
+    .then(response => response.json())
+    .then(json => {
+      this.setState({
+        users: json,
+      });
     })
     .catch(ex => {
       console.error('parsing failed', ex);
@@ -27,6 +40,9 @@ class Demo extends Component {
       <div>
         <TableUp
           data={this.state.users}
+          onQuerySeach={this.handleQuerySeach}
+          querySearchDebounceTime={200}
+          querySearchHintText="Search"
         />
       </div>
     );
