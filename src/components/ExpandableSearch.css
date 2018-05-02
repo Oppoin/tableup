@@ -1,0 +1,22 @@
+.search-container {
+    width: 0;
+    transition: .2s cubic-bezier(.4,0,.2,1);
+    position: absolute;
+    top: 15px;
+    right: 45px;
+}
+
+.toggled {
+    width: 360px !important;
+}
+
+.search-icon {
+    position: absolute;
+    left: -30px;
+    top: 6px;
+}
+.close-icon {
+    position: absolute;
+    right: -1px;
+    top: 6px;
+}
