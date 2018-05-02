@@ -234,6 +234,7 @@ class EnhancedTable extends React.Component {
       selected: [],
       data: [],
       page: 0,
+      count: null,
       ...options
     };
   }
@@ -245,7 +246,7 @@ class EnhancedTable extends React.Component {
       })
     })
     .then(response => response.json())
-    .then(json => this.setState({data: json.data}))
+    .then(json => this.setState({data: json.data, count:json.meta.pagination.count}))
   }
 
   handleClick = (event, id) => {
@@ -270,8 +271,18 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage = (event, page) => {
-    this.setState({ page, 
-                    selected: [] });
+    fetch(`${BASE_URL}?page=${page + 1}`, {
+      headers: new Headers({
+        'Content-Type' : 'application/vnd.api+json'
+      })
+    })
+    .then(response => response.json())
+    .then(json => {
+      this.setState({data:json.data,
+                    page, 
+                    selected: [] })
+      })
+
   };
 
   handleChangeRowsPerPage = event => {
@@ -286,7 +297,7 @@ class EnhancedTable extends React.Component {
       })
     })
     .then(response => response.json())
-    .then(json => this.setState({json}))
+    .then(json => this.setState({data: json.data, count:json.meta.pagination.count}))
   }
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
@@ -296,7 +307,7 @@ class EnhancedTable extends React.Component {
     checked = checked || event.target.checked;
     if (checked) {
       const {rowsPerPage, page} = this.state;
-      this.setState({ selected: this.state.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => n.id) });
+      this.setState({ selected: this.state.data.map(n => n.id) });
       return;
     }
     this.setState({ selected: [] });
@@ -304,7 +315,7 @@ class EnhancedTable extends React.Component {
 
   handleAllBtnClick = () => {
     const {rowsPerPage, page} = this.state;
-    this.setState({ selected: this.state.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => n.id),
+    this.setState({ selected: this.state.data.map(n => n.id),
                     menuOpen: false});
   }
 
@@ -320,7 +331,7 @@ class EnhancedTable extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, selected, rowsPerPage, page, paging, rowsPerPageOptions, checkbox } = this.state;
+    const { data, selected, rowsPerPage, page, paging, rowsPerPageOptions, checkbox, count } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
@@ -338,7 +349,7 @@ class EnhancedTable extends React.Component {
               onSelectAllClick={this.handleSelectAllClick}
             />
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+              {data.map(n => {
                 const isSelected = this.isSelected(n.id);
                 return (
                   <TableRow
@@ -358,8 +369,8 @@ class EnhancedTable extends React.Component {
                     </TableCell>
                     <TableCell numeric>{n.id}</TableCell>
                     <TableCell padding="none">{n.name}</TableCell>
-                    <TableCell>{n.username}</TableCell>
-                    <TableCell>{n.email}</TableCell>
+                    <TableCell>{n.attributes.username}</TableCell>
+                    <TableCell>{n.attributes.email}</TableCell>
                     <TableCell numeric>{n.phone}</TableCell>
                     <TableCell>{n.website}</TableCell>
                   </TableRow>
@@ -376,7 +387,7 @@ class EnhancedTable extends React.Component {
         {paging ? 
         <TablePagination
           component="div"
-          count={data.length}
+          count={count}
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={rowsPerPageOptions}
           page={page}
