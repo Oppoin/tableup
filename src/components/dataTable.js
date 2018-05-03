@@ -183,7 +183,7 @@ let EnhancedTableToolbar = props => {
             </IconButton>
         ) : null}
       </div>
-    </Toolbar>  
+    </Toolbar>
   </div>
   );
 };
@@ -218,7 +218,7 @@ class EnhancedTable extends React.Component {
 
     let {options} = props;
     const defaultOptions = {
-      paging: true, 
+      paging: true,
       rowsPerPageOptions: [2, 5, 10],
       rowsPerPage: 5,
       checkbox: true,
@@ -234,7 +234,7 @@ class EnhancedTable extends React.Component {
       selected: [],
       data: [],
       page: 0,
-      count: null,
+      count: 10,
       ...options
     };
   }
@@ -279,7 +279,7 @@ class EnhancedTable extends React.Component {
     .then(response => response.json())
     .then(json => {
       this.setState({data:json.data,
-                    page, 
+                    page,
                     selected: [] })
       })
 
@@ -291,7 +291,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleSearch = query => {
-    fetch(`${BASE_URL}?q=${query}`, {
+    fetch(`${BASE_URL}?filter{username.icontains}=${query}`, {
       headers: new Headers({
         'Content-Type' : 'application/vnd.api+json'
       })
@@ -336,11 +336,10 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar 
+        <EnhancedTableToolbar
           numSelected={selected.length}
           handleSearch={this.handleSearch}
           searchEnabled={this.state.search} />
-        
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
@@ -362,7 +361,7 @@ class EnhancedTable extends React.Component {
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox">
-                    {checkbox ? 
+                    {checkbox ?
                       <Checkbox checked={isSelected} />
                     :
                     null }
@@ -384,7 +383,7 @@ class EnhancedTable extends React.Component {
             </TableBody>
           </Table>
         </div>
-        {paging ? 
+        {paging ?
         <TablePagination
           component="div"
           count={count}
