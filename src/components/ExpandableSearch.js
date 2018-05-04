@@ -11,6 +11,19 @@ const styles = theme => ({
     formContainer: {
         flex: '1 2 100%'
     },
+    underline: {
+        color: '#fff',
+        '&:before': {
+            backgroundColor: 'rgba(255, 255, 255, 0.42)',
+        },
+        '&:after': {
+            backgroundColor: '#fff',
+        },
+        '&:hover:not(.disabled):before': {
+            backgroundColor: '#fff',
+        },
+    }
+
 })
 
 class ExpandableSearch extends React.Component {
@@ -61,10 +74,11 @@ class ExpandableSearch extends React.Component {
               id="search"
               type="text"
               placeholder="Search..."
-              className={classNames(classes.textfield)}
+              
               fullWidth={true}
               InputProps={{
-                style: {color: 'inherit'}
+                //style: {color: 'inherit'}
+                className: classNames(classes.underline,)
               }}
               inputRef={el => {this.searchField = el}}
               //onChange={callSearchRequest}
