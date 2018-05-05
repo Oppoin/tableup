@@ -21,6 +21,7 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandableSearch from './ExpandableSearch';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {BASE_URL} from '../constants';
 
 
@@ -75,7 +76,7 @@ class EnhancedTableHead extends React.Component {
                 style={{paddingLeft: 12}}
               >
                 <Checkbox indeterminate={numSelected > 0 && numSelected < rowCount}
-                          checked={numSelected === rowCount}
+                          checked={numSelected > 0 && numSelected === rowCount}
                           onClick={onSelectAllClick} />
                 <KeyboardArrowDown />
               </Button>
@@ -134,6 +135,7 @@ const toolbarStyles = theme => ({
     flex: '1 1 100%',
   },
   actions: {
+    display: 'flex',
     color: theme.palette.text.secondary,
   },
   title: {
@@ -144,49 +146,89 @@ const toolbarStyles = theme => ({
   }
 });
 
-let EnhancedTableToolbar = props => {
-  const {classes, searchEnabled, numSelected, handleSearch } = props;
+class EnhancedTableToolbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rightMenuOpen: false
+    }
+  }
 
-  return (
-    <div>
-    <AppBar position="static">
+  handleMenuClick = () => {
+    this.setState({rightMenuOpen: !this.state.rightMenuOpen})
+  }
+
+  handleMenuClose = () => {
+    this.setState({ rightMenuOpen: false });
+  };
+
+  handleMenuItemClick = (event) => {
+    this.setState({ rightMenuOpen: false });
+  }
+
+  render() {
+    const {rightMenuOpen} = this.state;
+    const {classes, searchEnabled, numSelected, handleSearch } = this.props;
+
+    return (
+      <div>
+      <AppBar position="static">
+        <Toolbar
+          className={classNames(classes.root)}
+        >
+          <Typography color="inherit" variant="title">TableUp</Typography>
+          <div className={classes.spacer}></div>
+          {searchEnabled ?
+            <ExpandableSearch handleSearch={handleSearch}/>
+            :
+          null }
+        </Toolbar>
+      </AppBar>
       <Toolbar
-        className={classNames(classes.root)}
+        className={classNames(classes.root, {
+          [classes.highlight]: numSelected > 0,
+        })}
       >
-        <Typography color="inherit" variant="title">TableUp</Typography>
-        <div className={classes.spacer}></div>
-        {searchEnabled ?
-          <ExpandableSearch handleSearch={handleSearch}/>
-          :
-        null }
+        <div className={classes.title}>
+          {numSelected > 0 ? (
+            <Typography color="inherit" variant="subheading">
+              {numSelected} selected
+            </Typography>
+          ) : (
+            <Typography variant="title">Users</Typography>
+          )}
+        </div>
+        <div className={classes.spacer} />
+        <div className={classes.actions}>
+          {numSelected > 0 ? (
+              <IconButton aria-label="Delete">
+                <DeleteIcon />
+              </IconButton>
+          ) : null}
+          <IconButton 
+            aria-label="More"
+            onClick={this.handleMenuClick}
+            buttonRef={(el) => {this.moreVertIconEl = el}}>
+                <MoreVertIcon />
+          </IconButton>
+  
+          <Menu
+              id="right-menu"
+              anchorEl={this.moreVertIconEl}
+              open={rightMenuOpen}
+              onClose={this.handleMenuClose}
+              anchorOrigin={{vertical: 'bottom'}}
+              getContentAnchorEl={null}
+            >
+            <MenuItem onClick={this.handleMenuItemClick}>Item 1</MenuItem>
+            <MenuItem onClick={this.handleMenuItemClick}>Item 2</MenuItem>
+          </Menu>
+        </div>
       </Toolbar>
-    </AppBar>
-    <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subheading">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="title">Users</Typography>
-        )}
-      </div>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-        ) : null}
-      </div>
-    </Toolbar>
-  </div>
-  );
-};
+    </div>
+    );
+  }
+} 
 
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -240,7 +282,9 @@ class EnhancedTable extends React.Component {
   }
 
   componentDidMount() {
-    fetch(BASE_URL, {
+    const {rowsPerPage} = this.state;
+
+    fetch(`${BASE_URL}?per_page=${rowsPerPage}`, {
       headers: new Headers({
         'Content-Type' : 'application/vnd.api+json'
       })
@@ -271,7 +315,9 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage = (event, page) => {
-    fetch(`${BASE_URL}?page=${page + 1}`, {
+    const {rowsPerPage} = this.state;
+
+    fetch(`${BASE_URL}?page=${page + 1}&per_page=${rowsPerPage}`, {
       headers: new Headers({
         'Content-Type' : 'application/vnd.api+json'
       })
@@ -287,11 +333,14 @@ class EnhancedTable extends React.Component {
 
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value,
-                    selected: []   });
+                    selected: [],
+                     });
   };
 
   handleSearch = query => {
-    fetch(`${BASE_URL}?filter{username.icontains}=${query}`, {
+    const {rowsPerPage} = this.state;
+
+    fetch(`${BASE_URL}?filter{username.icontains}=${query}&per_page=${rowsPerPage}`, {
       headers: new Headers({
         'Content-Type' : 'application/vnd.api+json'
       })
@@ -306,7 +355,6 @@ class EnhancedTable extends React.Component {
     event.stopPropagation();
     checked = checked || event.target.checked;
     if (checked) {
-      const {rowsPerPage, page} = this.state;
       this.setState({ selected: this.state.data.map(n => n.id) });
       return;
     }
@@ -314,7 +362,6 @@ class EnhancedTable extends React.Component {
   };
 
   handleAllBtnClick = () => {
-    const {rowsPerPage, page} = this.state;
     this.setState({ selected: this.state.data.map(n => n.id),
                     menuOpen: false});
   }
@@ -332,7 +379,7 @@ class EnhancedTable extends React.Component {
   render() {
     const { classes } = this.props;
     const { data, selected, rowsPerPage, page, paging, rowsPerPageOptions, checkbox, count } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - data.length;
 
     return (
       <Paper className={classes.root}>
@@ -340,12 +387,11 @@ class EnhancedTable extends React.Component {
           numSelected={selected.length}
           handleSearch={this.handleSearch}
           searchEnabled={this.state.search} />
-
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
               numSelected={selected.length}
-              rowCount={rowsPerPage}
+              rowCount={data.length}
               onSelectAllClick={this.handleSelectAllClick}
             />
             <TableBody>
