@@ -3,29 +3,29 @@ import t from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import {
-  DataTableData,
+  dataArrayType,
 } from './shapes.js';
 
 import DataTable from './components/DataTable/DataTable.js';
 
+// Please proceed with MS3 but this time do include the pagination and use the endpoint I created where there is pagination metadata
+
 class TableUp extends React.Component {
   static propTypes = {
-    data: DataTableData,
+    dataArray: dataArrayType.isRequired,
     onQuerySeach: t.func.isRequired,
     querySearchDebounceTime: t.number,
     querySearchHintText: t.string,
   };
 
   static defaultProps = {
-    data: [],
-    onQuerySeach: () => {},
     querySearchDebounceTime: 0,
     querySearchHintText: 'Search',
   };
 
   render() {
     const {
-      data,
+      dataArray,
       onQuerySeach,
       querySearchDebounceTime,
       querySearchHintText,
@@ -42,8 +42,8 @@ class TableUp extends React.Component {
         >
 
           <DataTable
-            data={data}
-            onQuerySeach={onQuerySeach}
+            data={dataArray}
+            onQuerySeach={this.handleQuerySeach}
             querySearchDebounceTime={querySearchDebounceTime}
             querySearchHintText={querySearchHintText}
           />

@@ -84,7 +84,7 @@ class Search extends React.Component {
           value={this.state.value}
           onChange={this.handleChange}
           style={{
-            textAlign: 'left'
+            textAlign: 'left',
           }}
           underlineStyle={{
             borderColor: muiTheme.palette.alternateTextColor,

@@ -12,7 +12,7 @@ import {
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import {
-  DataTableData,
+  dataArrayType,
 } from '../../shapes.js';
 
 import Header from './components/Header/Header.js';
@@ -69,7 +69,7 @@ const DataTable = ({
 };
 
 DataTable.propTypes = {
-  data: DataTableData,
+  data: dataArrayType.isRequired,
   onQuerySeach: t.func.isRequired,
   querySearchDebounceTime: t.number,
   querySearchHintText: t.string,
