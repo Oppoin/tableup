@@ -362,7 +362,8 @@ class EnhancedTable extends React.Component {
     .then(response => response.json())
     .then(json => this.setState({data: json.data, 
                                 count:json.meta.pagination.count,
-                                query}))
+                                query,
+                                selected: []}))
   }
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
