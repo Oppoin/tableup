@@ -277,6 +277,7 @@ class EnhancedTable extends React.Component {
       data: [],
       page: 0,
       count: 10,
+      query: '',
       ...options
     };
   }
@@ -315,9 +316,9 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage = (event, page) => {
-    const {rowsPerPage} = this.state;
+    const {rowsPerPage, query} = this.state;
 
-    fetch(`${BASE_URL}?page=${page + 1}&per_page=${rowsPerPage}`, {
+    fetch(`${BASE_URL}?page=${page + 1}&per_page=${rowsPerPage}&filter{username.icontains}=${query}`, {
       headers: new Headers({
         'Content-Type' : 'application/vnd.api+json'
       })
@@ -332,9 +333,22 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value,
-                    selected: [],
-                     });
+    const page = 0,
+          rowsPerPage = event.target.value,
+          {query} = this.state;
+    fetch(`${BASE_URL}?page=${page + 1}&per_page=${rowsPerPage}&filter{username.icontains}=${query}`, {
+      headers: new Headers({
+        'Content-Type' : 'application/vnd.api+json'
+      })
+    })
+    .then(response => response.json())
+    .then(json => {
+      this.setState({data:json.data,
+                    count:json.meta.pagination.count,
+                    page,
+                    rowsPerPage,
+                    selected: [] })
+      })
   };
 
   handleSearch = query => {
@@ -346,7 +360,9 @@ class EnhancedTable extends React.Component {
       })
     })
     .then(response => response.json())
-    .then(json => this.setState({data: json.data, count:json.meta.pagination.count}))
+    .then(json => this.setState({data: json.data, 
+                                count:json.meta.pagination.count,
+                                query}))
   }
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
