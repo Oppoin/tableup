@@ -2,9 +2,9 @@ import React from 'react';
 import t from 'prop-types';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
-import ActionSearchIcon from 'material-ui/svg-icons/action/search';
-import ContentClearIcon from 'material-ui/svg-icons/content/clear';
-import muiThemeable from 'material-ui/styles/muiThemeable';
+import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
+import {withTheme} from 'material-ui/styles';
 import debounce from 'lodash.debounce';
 
 class Search extends React.Component {
@@ -36,9 +36,6 @@ class Search extends React.Component {
 
   handleChange = e => {
     const value = e.target.value;
-    const {
-      querySearchDebounceTime,
-    } = this.props;
 
     this.setState({
       value,
@@ -63,19 +60,18 @@ class Search extends React.Component {
 
   render() {
     const {
-      onQuerySeach,
       querySearchHintText,
-      muiTheme,
+      theme,
     } = this.props;
 
     return (
       <div style={{
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
       }}>
-        <ActionSearchIcon
+        <SearchIcon
           style={{
-            color: muiTheme.palette.alternateTextColor,
+            color: theme.palette.alternateTextColor,
             marginRight: 4,
           }}
         />
@@ -87,7 +83,7 @@ class Search extends React.Component {
             textAlign: 'left',
           }}
           underlineStyle={{
-            borderColor: muiTheme.palette.alternateTextColor,
+            borderColor: theme.palette.alternateTextColor,
           }}
           underlineFocusStyle={{
             border: 'none',
@@ -97,7 +93,7 @@ class Search extends React.Component {
           }}
           inputStyle={{
             width: 230,
-            color: muiTheme.palette.alternateTextColor,
+            color: theme.palette.alternateTextColor,
           }}
         />
         {this.state.value.length > 0 &&
@@ -109,10 +105,10 @@ class Search extends React.Component {
               zIndex: 2,
             }}
             iconStyle={{
-              color: muiTheme.palette.alternateTextColor,
+              color: theme.palette.alternateTextColor,
             }}
           >
-            <ContentClearIcon/>
+            <ClearIcon/>
           </IconButton>
         }
       </div>
@@ -120,4 +116,4 @@ class Search extends React.Component {
   }
 }
 
-export default muiThemeable()(Search);
+export default withTheme()(Search);

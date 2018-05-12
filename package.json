@@ -19,8 +19,10 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "@material-ui/icons": "^1.0.0-beta.43",
+    "classnames": "^2.2.5",
     "lodash.debounce": "^4.0.8",
-    "material-ui": "^0.20.0"
+    "material-ui": "^1.0.0-beta.45"
   },
   "peerDependencies": {
     "react": "16.x"
