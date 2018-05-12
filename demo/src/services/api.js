@@ -17,6 +17,7 @@ function checkStatus(response) {
 const defaultOptions = {
   method: 'GET',
   headers: {
+    // 'Accept': 'application/json',
     'Content-Type': 'application/vnd.api+json', // http://jsonapi.org/ specification
   },
   // https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials
@@ -24,8 +25,6 @@ const defaultOptions = {
 };
 
 export function handleFetch(url, options = {}, callback) {
-  const myOptions = {...defaultOptions, ...options};
-  console.log('myOptions', myOptions);
   window.fetch(url, {...defaultOptions, ...options})
     .then(checkStatus)
     .then(response => response.json())
