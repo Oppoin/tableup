@@ -6,8 +6,7 @@ import {
   dataArrayType,
 } from './shapes.js';
 
-// import DataTable from './components/DataTable/DataTable.js';
-import DataTable from './DataTable.js';
+import DataTable from './components/DataTable/DataTable.js';
 
 const theme = createMuiTheme();
 
@@ -41,15 +40,12 @@ class TableUp extends React.Component {
           }}
           {...props}
         >
-          {/* <DataTable
-            data={dataArray}
-            onQuerySeach={this.handleQuerySeach}
-            querySearchDebounceTime={querySearchDebounceTime}
+          <DataTable
+            // data={dataArray}
+            // onQuerySeach={this.handleQuerySeach}
+            // querySearchDebounceTime={querySearchDebounceTime}
             querySearchHintText={querySearchHintText}
-          /> */}
-
-          <DataTable/>
-
+          />
         </div>
       </MuiThemeProvider>
     );

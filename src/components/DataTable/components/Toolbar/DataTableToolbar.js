@@ -4,13 +4,13 @@ import t from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
+// import IconButton from 'material-ui/IconButton';
+// import Tooltip from 'material-ui/Tooltip';
 // import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 // import {lighten} from 'material-ui/styles/colorManipulator';
 
-import Search from './Search.js';
+import DataTableToolbarSearch from './components/Search/DataTableToolbarSearch.js';
 
 let DataTableToolbar = props => {
   const {
@@ -37,7 +37,7 @@ let DataTableToolbar = props => {
       </div>
       <div className={classes.spacer}/>
       <div className={classes.actions}>
-        <Search
+        <DataTableToolbarSearch
           // onQuerySeach={onQuerySeach}
           // querySearchDebounceTime={querySearchDebounceTime}
           // querySearchHintText={querySearchHintText}
