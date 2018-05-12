@@ -15,7 +15,7 @@ const columnData = [
   { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
 ];
 
-class DataTableHead extends React.Component {
+class DataTableHeader extends React.Component {
   static propTypes = {
     numSelected: t.number.isRequired,
     onSelectAllClick: t.func.isRequired,
@@ -54,4 +54,4 @@ class DataTableHead extends React.Component {
   }
 }
 
-export default DataTableHead;
+export default DataTableHeader;
