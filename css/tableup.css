@@ -1,1 +1,6 @@
+/* https://material-ui-next.com/style/typography/ */
+/* We can ask users to include: */
+/* <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"> */
+/* so we don't have to worry about this */
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
