@@ -50,6 +50,7 @@ class DataTable extends React.Component {
             aria-labelledby="datatable-title"
           >
             <DataTableHeader
+              selection={selection}
               isAllSelected={data.values.length > 0 && selected.length === data.values.length}
               columns={data.columns}
               onSelectAllClick={handleSelectAllClick}
@@ -58,23 +59,39 @@ class DataTable extends React.Component {
             <TableBody>
               {data.values.map(item => {
                 const isSelected = this.isSelected(item.id);
+
+                if (selection.enabled) {
+                  return (
+                    <TableRow
+                      key={item.id}
+                      hover
+                      onClick={e => handleClick(e, item.id)}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      selected={isSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox checked={isSelected}/>
+                      </TableCell>
+                      {data.columns.map((column, i) =>
+                        <TableCell
+                          key={column.key}
+                          padding={i === 0 ? 'none' : 'default'}
+                          numeric={column.numeric}
+                        >{get(item, column.key)}</TableCell>
+                      )}
+                    </TableRow>
+                  );
+                }
                 return (
                   <TableRow
-                    hover
-                    onClick={e => handleClick(e, item.id)}
-                    role="checkbox"
-                    aria-checked={isSelected}
-                    tabIndex={-1}
                     key={item.id}
-                    selected={isSelected}
+                    hover
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox checked={isSelected}/>
-                    </TableCell>
                     {data.columns.map((column, i) =>
                       <TableCell
                         key={column.key}
-                        padding={i === 0 ? 'none' : 'default'}
                         numeric={column.numeric}
                       >{get(item, column.key)}</TableCell>
                     )}
