@@ -14,12 +14,6 @@ class DataTableToolbarSearch extends React.Component {
     querySearchHintText: t.string,
   };
 
-  static defaultProps = {
-    onQuerySeach: () => {},
-    querySearchDebounceTime: 0,
-    querySearchHintText: 'Search',
-  };
-
   state = {
     value: '',
   };

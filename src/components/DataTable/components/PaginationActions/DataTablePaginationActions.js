@@ -10,8 +10,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 class DataTablePaginationActions extends React.Component {
   static propTypes = {
     page: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
     count: PropTypes.number.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
     onChangePage: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,

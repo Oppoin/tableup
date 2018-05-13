@@ -66,6 +66,9 @@ let DataTableToolbar = props => {
 DataTableToolbar.propTypes = {
   title: t.string,
   numSelected: t.number.isRequired,
+  querySearchHintText: t.string,
+  querySearchDebounceTime: t.number,
+  onQuerySeach: t.func,
   classes: t.object.isRequired,
 };
 

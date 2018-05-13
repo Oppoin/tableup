@@ -15,7 +15,7 @@ class Demo extends Component {
       username: '',
     },
     data: [],
-    count: 0,
+    total: 0,
   };
 
   componentDidMount() {
@@ -41,7 +41,7 @@ class Demo extends Component {
       response => {
         this.setState({
           data: response.data,
-          count: response.meta.pagination.count,
+          total: response.meta.pagination.count,
         });
       }
     );
@@ -80,41 +80,54 @@ class Demo extends Component {
     return (
       <div>
         <TableUp
-          dataArray={this.state.data}
-          dataColumns={[
-            {
-              key: 'attributes.username',
-              label: 'Username',
-            },
-            {
-              key: 'attributes.email',
-              label: 'Email',
-            },
-            {
-              key: 'attributes.age',
-              numeric: true,
-              label: 'Age',
-            },
-            {
-              key: 'attributes.sex',
-              label: 'Sex',
-            },
-            {
-              key: 'attributes.address',
-              label: 'Address',
-            },
-          ]}
           title="My table"
-          querySearchHintText="Search"
-          querySearchDebounceTime={200}
-          onQuerySeach={this.handleQuerySeach}
-          page={this.state.page}
-          startingPage={1}
-          rowsPerPage={this.state.perPage}
-          count={this.state.count}
-          onChangePage={this.handleChangePage}
-          rowsPerPageOptions={[5, 10, 20]}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          data={{
+            values: this.state.data,
+            columns: [
+              {
+                key: 'attributes.username',
+                label: 'Username',
+              },
+              {
+                key: 'attributes.email',
+                label: 'Email',
+              },
+              {
+                key: 'attributes.age',
+                numeric: true,
+                label: 'Age',
+              },
+              {
+                key: 'attributes.sex',
+                label: 'Sex',
+              },
+              {
+                key: 'attributes.address',
+                label: 'Address',
+              },
+            ],
+          }}
+          selection={{
+            enabled: true,
+            selectAll: true,
+            onSelectedAction: () => {}, // TODO
+          }}
+          querySearch={{
+            enabled: true,
+            hintText: 'Search',
+            debounceTime: 200,
+            onSearch: this.handleQuerySeach,
+          }}
+          pagination={{
+            enabled: true,
+            page: this.state.page,
+            startingPage: 1,
+            rowsPerPage: this.state.perPage,
+            total: this.state.total,
+            onChangePage: this.handleChangePage,
+            rowsPerPageOptions: [5, 10, 20],
+            onChangeRowsPerPage: this.handleChangeRowsPerPage,
+          }}
         />
       </div>
     );
