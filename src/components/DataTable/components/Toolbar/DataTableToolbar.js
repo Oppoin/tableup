@@ -16,6 +16,9 @@ let DataTableToolbar = props => {
   const {
     title,
     // numSelected,
+    querySearchHintText,
+    querySearchDebounceTime,
+    onQuerySeach,
     classes,
   } = props;
 
@@ -38,9 +41,9 @@ let DataTableToolbar = props => {
       <div className={classes.spacer}/>
       <div className={classes.actions}>
         <DataTableToolbarSearch
-          // onQuerySeach={onQuerySeach}
-          // querySearchDebounceTime={querySearchDebounceTime}
-          // querySearchHintText={querySearchHintText}
+          onQuerySeach={onQuerySeach}
+          querySearchDebounceTime={querySearchDebounceTime}
+          querySearchHintText={querySearchHintText}
         />
         {/* {numSelected > 0 ?
           <Tooltip title="Delete">

@@ -1,10 +1,10 @@
 import React from 'react';
 import t from 'prop-types';
 import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
+import {InputAdornment} from 'material-ui/Input';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-import {withTheme} from 'material-ui/styles';
+import {withStyles} from 'material-ui/styles';
 import debounce from 'lodash.debounce';
 
 class DataTableToolbarSearch extends React.Component {
@@ -61,59 +61,46 @@ class DataTableToolbarSearch extends React.Component {
   render() {
     const {
       querySearchHintText,
-      theme,
+      classes,
     } = this.props;
 
     return (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-      }}>
-        <SearchIcon
-          style={{
-            color: theme.palette.alternateTextColor,
-            marginRight: 4,
-          }}
-        />
+      <div className={classes.root}>
+        <SearchIcon className={classes.searchIcon}/>
         <TextField
-          hintText={querySearchHintText}
+          label={querySearchHintText}
+          margin="none"
           value={this.state.value}
           onChange={this.handleChange}
-          style={{
-            textAlign: 'left',
-          }}
-          underlineStyle={{
-            borderColor: theme.palette.alternateTextColor,
-          }}
-          underlineFocusStyle={{
-            border: 'none',
-          }}
-          hintStyle={{
-            color: 'rgba(240, 240, 240, .6)',
-          }}
-          inputStyle={{
-            width: 230,
-            color: theme.palette.alternateTextColor,
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <ClearIcon
+                  className={classes.clearButton}
+                  style={{
+                    visibility: this.state.value.length === 0 ? 'hidden' : 'visible',
+                  }}
+                  onClick={this.handleClear}
+                />
+              </InputAdornment>
+            ),
           }}
         />
-        {this.state.value.length > 0 &&
-          <IconButton
-            onClick={this.handleClear}
-            style={{
-              position: 'absolute',
-              right: 8,
-              zIndex: 2,
-            }}
-            iconStyle={{
-              color: theme.palette.alternateTextColor,
-            }}
-          >
-            <ClearIcon/>
-          </IconButton>
-        }
       </div>
     );
   }
 }
 
-export default withTheme()(DataTableToolbarSearch);
+export default withStyles(theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  searchIcon: {
+    marginRight: 4,
+    marginTop: 14,
+  },
+  clearButton: {
+    cursor: 'pointer',
+  },
+}))(DataTableToolbarSearch);
