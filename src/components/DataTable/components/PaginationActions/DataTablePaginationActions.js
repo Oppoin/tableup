@@ -7,45 +7,43 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
-const actionsStyles = theme => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5,
-  },
-});
-
 class DataTablePaginationActions extends React.Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
-    count: PropTypes.number.isRequired,
-    onChangePage: PropTypes.func.isRequired,
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
+    count: PropTypes.number.isRequired,
+    onChangePage: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
   };
 
-  handleFirstPageButtonClick = event => {
-    this.props.onChangePage(event, 0);
+  handleFirstPageButtonClick = e => {
+    this.props.onChangePage(e, 0);
   };
 
-  handleBackButtonClick = event => {
-    this.props.onChangePage(event, this.props.page - 1);
+  handleBackButtonClick = e => {
+    this.props.onChangePage(e, this.props.page - 1);
   };
 
-  handleNextButtonClick = event => {
-    this.props.onChangePage(event, this.props.page + 1);
+  handleNextButtonClick = e => {
+    this.props.onChangePage(e, this.props.page + 1);
   };
 
-  handleLastPageButtonClick = event => {
+  handleLastPageButtonClick = e => {
     this.props.onChangePage(
-      event,
+      e,
       Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
     );
   };
 
   render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props;
+    const {
+      page,
+      rowsPerPage,
+      count,
+      classes,
+      theme,
+    } = this.props;
 
     return (
       <div className={classes.root}>
@@ -82,6 +80,12 @@ class DataTablePaginationActions extends React.Component {
   }
 }
 
-export default withStyles(actionsStyles, {
+export default withStyles(theme => ({
+  root: {
+    flexShrink: 0,
+    color: theme.palette.text.secondary,
+    marginLeft: theme.spacing.unit * 2.5,
+  },
+}), {
   withTheme: true,
 })(DataTablePaginationActions);

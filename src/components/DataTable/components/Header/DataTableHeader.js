@@ -7,26 +7,18 @@ import {
 } from 'material-ui/Table';
 import Checkbox from 'material-ui/Checkbox';
 
-const columnData = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
-];
-
 class DataTableHeader extends React.Component {
   static propTypes = {
-    numSelected: t.number.isRequired,
+    isAllSelected: t.bool.isRequired,
+    // columns: t.array.isRequired,
     onSelectAllClick: t.func.isRequired,
-    rowCount: t.number.isRequired,
   };
 
   render() {
     const {
+      isAllSelected,
+      columns,
       onSelectAllClick,
-      numSelected,
-      rowCount,
     } = this.props;
 
     return (
@@ -34,16 +26,16 @@ class DataTableHeader extends React.Component {
         <TableRow>
           <TableCell padding="checkbox">
             <Checkbox
-              checked={numSelected === rowCount}
+              checked={isAllSelected}
               onChange={onSelectAllClick}
             />
           </TableCell>
 
-          {columnData.map(column =>
+          {columns.map((column, i) =>
             <TableCell
-              key={column.id}
+              key={column.key}
               numeric={column.numeric}
-              padding={column.disablePadding ? 'none' : 'default'}
+              padding={i === 0 ? 'none' : 'default'}
             >
               {column.label}
             </TableCell>
