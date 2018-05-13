@@ -41,8 +41,7 @@ class DataTable extends React.Component {
         <DataTableToolbar
           title={title}
           numSelected={selected.length}
-          querySearchHintText={querySearch.hintText}
-          querySearchDebounceTime={querySearch.debounceTime}
+          querySearch={querySearch}
           onQuerySeach={onQuerySeach}
         />
 
