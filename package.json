@@ -22,6 +22,7 @@
     "@material-ui/icons": "^1.0.0-beta.43",
     "classnames": "^2.2.5",
     "lodash.debounce": "^4.0.8",
+    "lodash.get": "^4.4.2",
     "material-ui": "^1.0.0-beta.45"
   },
   "peerDependencies": {
