@@ -85,21 +85,23 @@ class DataTable extends React.Component {
           </Table>
         </div>
 
-        <TablePagination
-          component="div"
-          page={page}
-          count={pagination.total}
-          rowsPerPage={pagination.rowsPerPage}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-          ActionsComponent={DataTablePaginationActions}
-        />
+        {pagination.enabled &&
+          <TablePagination
+            component="div"
+            page={page}
+            count={pagination.total}
+            rowsPerPage={pagination.rowsPerPage}
+            backIconButtonProps={{
+              'aria-label': 'Previous Page',
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next Page',
+            }}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+            ActionsComponent={DataTablePaginationActions}
+          />
+        }
       </div>
     );
   }
