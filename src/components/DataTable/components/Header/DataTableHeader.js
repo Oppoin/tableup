@@ -7,10 +7,14 @@ import {
 } from 'material-ui/Table';
 import Checkbox from 'material-ui/Checkbox';
 
+import {
+  dataColumnsType,
+} from '../../../../shapes.js';
+
 class DataTableHeader extends React.Component {
   static propTypes = {
     isAllSelected: t.bool.isRequired,
-    // columns: t.array.isRequired,
+    columns: dataColumnsType.isRequired,
     onSelectAllClick: t.func.isRequired,
   };
 

@@ -3,8 +3,7 @@ import t from 'prop-types';
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 
 import {
-  dataArrayType,
-  dataColumnsType,
+  dataType,
 } from './shapes.js';
 
 import DataTable from './components/DataTable/DataTable.js';
@@ -13,35 +12,40 @@ const theme = createMuiTheme();
 
 class TableUp extends React.Component {
   static propTypes = {
-    dataArray: dataArrayType.isRequired,
-    dataColumns: dataColumnsType.isRequired,
     title: t.string,
-    querySearchHintText: t.string,
-    querySearchDebounceTime: t.number,
-    onQuerySeach: t.func.isRequired,
-    page: t.number.isRequired,
-    startingPage: t.number.isRequired,
-    rowsPerPage: t.number.isRequired,
-    count: t.number.isRequired,
-    onChangePage: t.func.isRequired,
-    rowsPerPageOptions: t.arrayOf(t.number),
-    onChangeRowsPerPage: t.func.isRequired,
+    data: dataType.isRequired,
+    selection: t.object,
+    querySearch: t.object,
+    pagination: t.object,
   };
 
   static defaultProps = {
-    dataArray: [],
-    dataColumns: [],
     title: '',
-    querySearchHintText: 'Search',
-    querySearchDebounceTime: 0,
-    onQuerySeach: () => {},
-    page: 1,
-    startingPage: 0,
-    rowsPerPage: 5,
-    count: 0,
-    onChangePage: () => {},
-    rowsPerPageOptions: [5, 10, 20],
-    onChangeRowsPerPage: () => {},
+    data: {
+      values: [],
+      columns: [],
+    },
+    selection: {
+      enabled: true,
+      selectAll: true,
+      onSelectedAction: () => {},
+    },
+    querySearch: {
+      enabled: true,
+      hintText: 'Search',
+      debounceTime: 200,
+      onSearch: () => {},
+    },
+    pagination: {
+      enabled: true,
+      page: 0,
+      startingPage: 0,
+      rowsPerPage: 5,
+      total: 0,
+      onChangePage: () => {},
+      rowsPerPageOptions: [5, 10, 20],
+      onChangeRowsPerPage: () => {},
+    },
   };
 
   state = {
@@ -51,7 +55,7 @@ class TableUp extends React.Component {
   handleSelectAllClick = (e, checked) => {
     this.setState({
       selected: checked ?
-        this.props.dataArray.map(item => item.id) : [],
+        this.props.data.values.map(item => item.id) : [],
     });
   };
 
@@ -87,7 +91,7 @@ class TableUp extends React.Component {
       selected: [],
     });
 
-    this.props.onQuerySeach(query);
+    this.props.querySearch.onSearch(query);
   };
 
   handleChangePage = (e, page) => {
@@ -96,7 +100,7 @@ class TableUp extends React.Component {
       selected: [],
     });
 
-    this.props.onChangePage(e, page + this.props.startingPage);
+    this.props.pagination.onChangePage(e, page + this.props.pagination.startingPage);
   };
 
   handleChangeRowsPerPage = e => {
@@ -105,24 +109,16 @@ class TableUp extends React.Component {
       selected: [],
     });
 
-    this.props.onChangeRowsPerPage(e);
+    this.props.pagination.onChangeRowsPerPage(e);
   }
 
   render() {
     const {
-      dataArray,
-      dataColumns,
       title,
-      onQuerySeach,
-      querySearchHintText,
-      querySearchDebounceTime,
-      page,
-      startingPage,
-      rowsPerPage,
-      count,
-      onChangePage,
-      rowsPerPageOptions,
-      onChangeRowsPerPage,
+      data,
+      selection,
+      querySearch,
+      pagination,
       ...props
     } = this.props;
 
@@ -135,15 +131,14 @@ class TableUp extends React.Component {
           {...props}
         >
           <DataTable
-            data={dataArray}
-            columns={dataColumns}
             title={title}
+            data={data}
+            selection={selection}
+            querySearch={querySearch}
+            pagination={pagination}
+            // ---
             selected={this.state.selected}
-            querySearchHintText={querySearchHintText}
-            querySearchDebounceTime={querySearchDebounceTime}
-            page={page - startingPage}
-            count={count}
-            rowsPerPage={rowsPerPage}
+            page={pagination.page - pagination.startingPage}
             handleClick={this.handleClick}
             handleSelectAllClick={this.handleSelectAllClick}
             onQuerySeach={this.handleQuerySeach}

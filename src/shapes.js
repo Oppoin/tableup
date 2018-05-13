@@ -1,6 +1,6 @@
 import t from 'prop-types';
 
-export const dataItemType = t.shape({
+export const dataValueType = t.shape({
   id: t.oneOfType([
     t.string,
     t.number,
@@ -8,7 +8,7 @@ export const dataItemType = t.shape({
   name: t.string,
   status: t.string,
 });
-export const dataArrayType = t.arrayOf(dataItemType);
+export const dataValuesType = t.arrayOf(dataValueType);
 
 export const dataColumnType = t.shape({
   key: t.string.isRequired,
@@ -16,3 +16,8 @@ export const dataColumnType = t.shape({
   numberic: t.bool,
 });
 export const dataColumnsType = t.arrayOf(dataColumnType);
+
+export const dataType = t.shape({
+  values: dataValuesType,
+  columns: dataColumnsType,
+});

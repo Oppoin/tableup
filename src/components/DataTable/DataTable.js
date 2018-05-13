@@ -1,7 +1,6 @@
 import React from 'react';
 import t from 'prop-types';
 import get from 'lodash.get';
-import {withStyles} from 'material-ui/styles';
 import Table, {
   TableBody,
   TableCell,
@@ -11,7 +10,7 @@ import Table, {
 import Checkbox from 'material-ui/Checkbox';
 
 import {
-  dataArrayType,
+  dataType,
 } from '../../shapes.js';
 
 import DataTableHeader from './components/Header/DataTableHeader.js';
@@ -23,21 +22,18 @@ class DataTable extends React.Component {
 
   render() {
     const {
-      data,
-      columns,
       title,
+      data,
+      selection,
+      querySearch,
+      pagination,
       selected,
-      querySearchHintText,
-      querySearchDebounceTime,
       page,
-      count,
-      rowsPerPage,
-      handleSelectAllClick,
       handleClick,
+      handleSelectAllClick,
       onQuerySeach,
       handleChangePage,
       handleChangeRowsPerPage,
-      classes,
     } = this.props;
 
     return (
@@ -45,24 +41,23 @@ class DataTable extends React.Component {
         <DataTableToolbar
           title={title}
           numSelected={selected.length}
-          querySearchHintText={querySearchHintText}
-          querySearchDebounceTime={querySearchDebounceTime}
+          querySearchHintText={querySearch.hintText}
+          querySearchDebounceTime={querySearch.debounceTime}
           onQuerySeach={onQuerySeach}
         />
 
-        <div className={classes.tableWrapper}>
+        <div>
           <Table
-            className={classes.table}
             aria-labelledby="datatable-title"
           >
             <DataTableHeader
-              isAllSelected={data.length > 0 && selected.length === data.length}
-              columns={columns}
+              isAllSelected={data.values.length > 0 && selected.length === data.values.length}
+              columns={data.columns}
               onSelectAllClick={handleSelectAllClick}
             />
 
             <TableBody>
-              {data.map(item => {
+              {data.values.map(item => {
                 const isSelected = this.isSelected(item.id);
                 return (
                   <TableRow
@@ -77,7 +72,7 @@ class DataTable extends React.Component {
                     <TableCell padding="checkbox">
                       <Checkbox checked={isSelected}/>
                     </TableCell>
-                    {columns.map((column, i) =>
+                    {data.columns.map((column, i) =>
                       <TableCell
                         key={column.key}
                         padding={i === 0 ? 'none' : 'default'}
@@ -94,8 +89,8 @@ class DataTable extends React.Component {
         <TablePagination
           component="div"
           page={page}
-          count={count}
-          rowsPerPage={rowsPerPage}
+          count={pagination.total}
+          rowsPerPage={pagination.rowsPerPage}
           backIconButtonProps={{
             'aria-label': 'Previous Page',
           }}
@@ -112,29 +107,18 @@ class DataTable extends React.Component {
 }
 
 DataTable.propTypes = {
-  data: dataArrayType.isRequired,
-  columns: t.array.isRequired,
   title: t.string,
-  // onQuerySeach: t.func.isRequired,
-  // querySearchDebounceTime: t.number,
-  // querySearchHintText: t.string,
-  classes: t.object.isRequired,
+  data: dataType.isRequired,
+  selection: t.object,
+  querySearch: t.object,
+  pagination: t.object,
+  selected: t.array,
+  page: t.number,
+  handleClick: t.func,
+  handleSelectAllClick: t.func,
+  onQuerySeach: t.func,
+  handleChangePage: t.func,
+  handleChangeRowsPerPage: t.func,
 };
 
-DataTable.defaultProps = {
-  data: [],
-  columns: [],
-  title: '',
-  // onQuerySeach: () => {},
-  // querySearchDebounceTime: 0,
-  // querySearchHintText: 'Search',
-};
-
-export default withStyles(theme => ({
-  table: {
-    // minWidth: 1020,
-  },
-  tableWrapper: {
-    // overflowX: 'auto',
-  },
-}))(DataTable);
+export default DataTable;
