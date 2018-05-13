@@ -150,7 +150,10 @@ class TableUp extends React.Component {
             }}
             // ---
             selected={this.state.selected}
-            page={pagination.page - pagination.startingPage}
+            page={
+              pagination.enabled ?
+                pagination.page - pagination.startingPage : 0
+            }
             handleClick={this.handleClick}
             handleSelectAllClick={this.handleSelectAllClick}
             onQuerySeach={this.handleQuerySeach}
