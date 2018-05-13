@@ -109,7 +109,6 @@ class Demo extends Component {
           }}
           selection={{
             enabled: true,
-            selectAll: true,
             onSelectedAction: () => {}, // TODO
           }}
           querySearch={{
