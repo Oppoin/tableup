@@ -132,10 +132,22 @@ class TableUp extends React.Component {
         >
           <DataTable
             title={title}
-            data={data}
-            selection={selection}
-            querySearch={querySearch}
-            pagination={pagination}
+            data={{
+              ...TableUp.defaultProps.data,
+              ...data,
+            }}
+            selection={{
+              ...TableUp.defaultProps.selection,
+              ...selection,
+            }}
+            querySearch={{
+              ...TableUp.defaultProps.querySearch,
+              ...querySearch,
+            }}
+            pagination={{
+              ...TableUp.defaultProps.pagination,
+              ...pagination,
+            }}
             // ---
             selected={this.state.selected}
             page={pagination.page - pagination.startingPage}
