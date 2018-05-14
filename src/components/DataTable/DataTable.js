@@ -108,6 +108,7 @@ class DataTable extends React.Component {
             page={page}
             count={pagination.total}
             rowsPerPage={pagination.rowsPerPage}
+            rowsPerPageOptions={pagination.rowsPerPageOptions}
             backIconButtonProps={{
               'aria-label': 'Previous Page',
             }}

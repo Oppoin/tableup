@@ -10,10 +10,10 @@ import '../../css/tableup.css';
 class Demo extends Component {
   state = {
     page: 1,
-    perPage: 5,
     filter: {
       username: '',
     },
+    rowsPerPage: 5,
     data: [],
     total: 0,
   };
@@ -33,7 +33,7 @@ class Demo extends Component {
     // page
     url = `${url}page=${this.state.page}&`;
     // perPage
-    url = `${url}per_page=${this.state.perPage}`;
+    url = `${url}per_page=${this.state.rowsPerPage}`;
 
     handleFetch(
       url,
@@ -70,7 +70,7 @@ class Demo extends Component {
   handleChangeRowsPerPage = e => {
     this.setState({
       page: 1, // reset
-      perPage: e.target.value,
+      rowsPerPage: e.target.value,
     }, () => {
       this.loadData();
     });
@@ -121,10 +121,10 @@ class Demo extends Component {
             enabled: true,
             page: this.state.page,
             startingPage: 1,
-            rowsPerPage: this.state.perPage,
             total: this.state.total,
+            rowsPerPage: this.state.rowsPerPage,
+            rowsPerPageOptions: [5, 10, 20, 30],
             onChangePage: this.handleChangePage,
-            rowsPerPageOptions: [5, 10, 20],
             onChangeRowsPerPage: this.handleChangeRowsPerPage,
           }}
         />
