@@ -51,6 +51,7 @@ class DataTable extends React.Component {
           >
             <DataTableHeader
               selection={selection}
+              numSelected={selected.length}
               isAllSelected={data.values.length > 0 && selected.length === data.values.length}
               columns={data.columns}
               onSelectAllClick={handleSelectAllClick}
