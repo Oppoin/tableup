@@ -32,6 +32,10 @@ const columnData = [
   { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   { id: 'phone', numeric: true, disablePadding: false, label: 'Phone' },
   { id: 'website', numeric: false, disablePadding: false, label: 'Website' },
+  { id: 'id7', numeric: false, disablePadding: false, label: 'Column 7' }, // added some empty columns to test table width with scrollbar
+  { id: 'id8', numeric: false, disablePadding: false, label: 'Column 8' },
+  { id: 'id9', numeric: false, disablePadding: false, label: 'Column 9' },
+  { id: 'id10', numeric: false, disablePadding: false, label: 'Column 10' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -122,15 +126,15 @@ const toolbarStyles = theme => ({
     paddingLeft: theme.spacing.unit,
   },
   highlight:
-    theme.palette.type === 'light'
-      ? {
+   // theme.palette.type === 'light'
+       {
           color: theme.palette.secondary.main,
           backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
         },
+      //: {
+          //color: theme.palette.text.primary,
+          //backgroundColor: theme.palette.secondary.dark,
+      //  },
   spacer: {
     flex: '1 1 100%',
   },
@@ -247,10 +251,6 @@ const styles = theme => ({
   },
   tableWrapper: {
     overflowX: 'auto',
-  },
-  notification: {
-    backgroundColor: '#fcf4c5',
-    textAlign: 'center'
   }
 });
 
@@ -436,12 +436,16 @@ class EnhancedTable extends React.Component {
                     <TableCell>{n.attributes.email}</TableCell>
                     <TableCell numeric>{n.phone}</TableCell>
                     <TableCell>{n.website}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 );
               })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={7} />
+                  <TableCell colSpan={11} />
                 </TableRow>
               )}
             </TableBody>
