@@ -11,6 +11,7 @@ class Demo extends Component {
   state = {
     page: 1,
     perPage: 5,
+    rowsPerPageOptions: [5, 10, 20, 30],
     filter: {
       username: '',
     },
@@ -124,7 +125,7 @@ class Demo extends Component {
             rowsPerPage: this.state.perPage,
             total: this.state.total,
             onChangePage: this.handleChangePage,
-            rowsPerPageOptions: [5, 10, 20],
+            rowsPerPageOptions: this.state.rowsPerPageOptions,
             onChangeRowsPerPage: this.handleChangeRowsPerPage,
           }}
         />
