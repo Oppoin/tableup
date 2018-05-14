@@ -14,6 +14,7 @@ import {
 class DataTableHeader extends React.Component {
   static propTypes = {
     selection: t.object,
+    numSelected: t.number,
     isAllSelected: t.bool.isRequired,
     columns: dataColumnsType.isRequired,
     onSelectAllClick: t.func.isRequired,
@@ -22,6 +23,7 @@ class DataTableHeader extends React.Component {
   render() {
     const {
       selection,
+      numSelected,
       isAllSelected,
       columns,
       onSelectAllClick,
@@ -33,6 +35,7 @@ class DataTableHeader extends React.Component {
           {selection.enabled &&
             <TableCell padding="checkbox">
               <Checkbox
+                indeterminate={numSelected > 0 && !isAllSelected}
                 checked={isAllSelected}
                 onChange={onSelectAllClick}
               />
