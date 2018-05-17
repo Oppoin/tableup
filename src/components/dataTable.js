@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import fetch from 'isomorphic-fetch';
 import { withStyles } from 'material-ui/styles';
 import Table, {
   TableBody,
