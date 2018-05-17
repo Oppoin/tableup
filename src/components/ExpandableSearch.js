@@ -95,4 +95,8 @@ class ExpandableSearch extends React.Component {
 
 }
 
+ExpandableSearch.propTypes = {
+    handleSearch: PropTypes.func.isRequired
+}
+
 export default withStyles(styles)(ExpandableSearch);
