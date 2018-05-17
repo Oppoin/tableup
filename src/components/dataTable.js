@@ -284,15 +284,19 @@ class EnhancedTable extends React.Component {
   }
 
   componentDidMount() {
-    const {rowsPerPage} = this.state;
+    // const {rowsPerPage} = this.state;
 
-    fetch(`${BASE_URL}?per_page=${rowsPerPage}`, {
-      headers: new Headers({
-        'Content-Type' : 'application/vnd.api+json'
-      })
-    })
-    .then(response => response.json())
-    .then(json => this.setState({data: json.data, count:json.meta.pagination.count}))
+    // fetch(`${BASE_URL}?per_page=${rowsPerPage}`, {
+    //   headers: new Headers({
+    //     'Content-Type' : 'application/vnd.api+json'
+    //   })
+    // })
+    // .then(response => response.json())
+    // .then(json => this.setState({data: json.data, count:json.meta.pagination.count}))
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({data: nextProps.data, count: nextProps.count})
   }
 
   handleClick = (event, id) => {
