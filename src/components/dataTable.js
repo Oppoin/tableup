@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import fetch from 'isomorphic-fetch';
 import { withStyles } from 'material-ui/styles';
 import Table, {
   TableBody,
@@ -23,7 +22,6 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandableSearch from './ExpandableSearch';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import {BASE_URL} from '../constants';
 
 
 const columnData = [
@@ -259,44 +257,10 @@ class EnhancedTable extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    let {options} = props;
-    const defaultOptions = {
-      paging: true,
-      rowsPerPageOptions: [2, 5, 10],
-      rowsPerPage: 5,
-      checkbox: true,
-      search: true
-    }
-
-    options = Object.assign({}, defaultOptions, options);
-
     this.state = {
       menuOpen: false,
-      order: 'asc',
-      orderBy: 'id',
       selected: [],
-      data: [],
-      page: 0,
-      count: 10,
-      query: '',
-      ...options
     };
-  }
-
-  componentDidMount() {
-    // const {rowsPerPage} = this.state;
-
-    // fetch(`${BASE_URL}?per_page=${rowsPerPage}`, {
-    //   headers: new Headers({
-    //     'Content-Type' : 'application/vnd.api+json'
-    //   })
-    // })
-    // .then(response => response.json())
-    // .then(json => this.setState({data: json.data, count:json.meta.pagination.count}))
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({data: nextProps.data, count: nextProps.count})
   }
 
   handleClick = (event, id) => {
@@ -321,54 +285,20 @@ class EnhancedTable extends React.Component {
   };
 
   handleChangePage = (event, page) => {
-    const {rowsPerPage, query} = this.state;
-
-    fetch(`${BASE_URL}?page=${page + 1}&per_page=${rowsPerPage}&filter{username.icontains}=${query}`, {
-      headers: new Headers({
-        'Content-Type' : 'application/vnd.api+json'
-      })
-    })
-    .then(response => response.json())
-    .then(json => {
-      this.setState({data:json.data,
-                    page,
-                    selected: [] })
-      })
-
+    this.props.onUpdate({page})
   };
 
   handleChangeRowsPerPage = event => {
-    const page = 0,
-          rowsPerPage = event.target.value,
-          {query} = this.state;
-    fetch(`${BASE_URL}?page=${page + 1}&per_page=${rowsPerPage}&filter{username.icontains}=${query}`, {
-      headers: new Headers({
-        'Content-Type' : 'application/vnd.api+json'
-      })
+     const page = 0,
+           rowsPerPage = event.target.value
+
+    this.setState({selected: []}, () => {
+      this.props.onUpdate({rowsPerPage, page})
     })
-    .then(response => response.json())
-    .then(json => {
-      this.setState({data:json.data,
-                    count:json.meta.pagination.count,
-                    page,
-                    rowsPerPage,
-                    selected: [] })
-      })
   };
 
   handleSearch = query => {
-    const {rowsPerPage} = this.state;
-
-    fetch(`${BASE_URL}?filter{username.icontains}=${query}&per_page=${rowsPerPage}`, {
-      headers: new Headers({
-        'Content-Type' : 'application/vnd.api+json'
-      })
-    })
-    .then(response => response.json())
-    .then(json => this.setState({data: json.data, 
-                                count:json.meta.pagination.count,
-                                query,
-                                selected: []}))
+    this.props.onUpdate({query})
   }
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
@@ -377,14 +307,14 @@ class EnhancedTable extends React.Component {
     event.stopPropagation();
     checked = checked || event.target.checked;
     if (checked) {
-      this.setState({ selected: this.state.data.map(n => n.id) });
+      this.setState({ selected: this.props.data.map(n => n.id) });
       return;
     }
     this.setState({ selected: [] });
   };
 
   handleAllBtnClick = () => {
-    this.setState({ selected: this.state.data.map(n => n.id),
+    this.setState({ selected: this.props.data.map(n => n.id),
                     menuOpen: false});
   }
 
@@ -399,8 +329,8 @@ class EnhancedTable extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { data, selected, rowsPerPage, page, paging, rowsPerPageOptions, checkbox, count } = this.state;
+    const { classes, data, count, rowsPerPage, page, paging, rowsPerPageOptions, checkbox } = this.props;
+    const { selected } = this.state;
     const emptyRows = rowsPerPage - data.length;
 
     return (
@@ -408,7 +338,7 @@ class EnhancedTable extends React.Component {
         <EnhancedTableToolbar
           numSelected={selected.length}
           handleSearch={this.handleSearch}
-          searchEnabled={this.state.search} />
+          searchEnabled={this.props.search} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead

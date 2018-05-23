@@ -1,37 +1,58 @@
 import React, { Component } from 'react';
 import EnhancedTable from './components/dataTable';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import {BASE_URL} from './constants';
+import Api from './services/api';
 
 const theme = createMuiTheme(window.themeConfig);
 
 class App extends Component {
   constructor(props, context) {
     super(props, context);
+
+    const defaultOptions = {
+      paging: true,
+      rowsPerPageOptions: [2, 5, 10],
+      rowsPerPage: 5,
+      checkbox: true,
+      search: true
+    }
+
+    const options = Object.assign({}, defaultOptions, window.tableConfig);
     this.state = {
       data: [],
-      rowsPerPage: 5,
-      count: 5
+      count: 0,
+      page: 0,
+      query: '',
+      ...options
     }
   }
 
   componentDidMount() {
-    const {rowsPerPage} = this.state;
-
-    fetch(`${BASE_URL}?per_page=${rowsPerPage}`, {
-      headers: new Headers({
-        'Content-Type' : 'application/vnd.api+json'
-      })
-    })
-    .then(response => response.json())
-    .then(json => this.setState({data: json.data, count:json.meta.pagination.count}))
+    this.refreshRows()
   }
+
+  updateData = (options) => {
+    this.setState(options, () => {
+      this.refreshRows()
+    })
+  }
+
+  refreshRows = () => {
+    const {rowsPerPage, page, query} = this.state
+    const fetchOpts = {rowsPerPage, page, query}
+    Api.getRows(fetchOpts)
+    .then(json => {
+      this.setState({data:json.data,
+                     count: json.meta.pagination.count,
+                    })
+                  })
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <EnhancedTable options={window.tableConfig}
-                      data={this.state.data}
-                      count={this.state.count} />
+        <EnhancedTable  onUpdate={this.updateData}
+                      {...this.state} />
       </MuiThemeProvider>
     );
   }
