@@ -39,14 +39,14 @@
     -->
 	<script>
 	var tableConfig = {
-		paging: true, 
+		paging: true,
 		rowsPerPageOptions: [2, 5, 10],
 		rowsPerPage: 5,
 		checkbox: true,
 		search: true
 	}
 	var themeConfig = {
-		overrides: {
+		//overrides: {
 		  MuiTableRow: { // Name of the component ⚛️ / style shee
 			root: { // Name of the rule
 			  backgroundColor: '#ff9247', // Some CSS
@@ -59,8 +59,8 @@
 			  '&$selected': {
 				backgroundColor: "#2d8aef",
 			  },
-			  
-			}     
+
+			}
 		  },
 		  MuiTableCell: {
 			body: {
