@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/kauker/tableup.svg?branch=master)](https://travis-ci.org/kauker/tableup)
-[![Coverage Status](https://coveralls.io/repos/github/kauker/tableup/badge.svg?branch=master)](https://coveralls.io/github/kauker/tableup?branch=master)
+[![codecov](https://codecov.io/gh/kauker/tableup/branch/master/graph/badge.svg)](https://codecov.io/gh/kauker/tableup)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
