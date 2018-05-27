@@ -27,8 +27,8 @@ class TableUp extends React.Component {
     },
     selection: {
       enabled: true,
-      selectAll: true,
-      onSelectedAction: () => {},
+      handleDelete: undefined,
+      additionalActions: [],
     },
     querySearch: {
       enabled: true,

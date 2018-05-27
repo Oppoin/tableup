@@ -13,7 +13,7 @@ import {
 
 class TableHeader extends React.Component {
   static propTypes = {
-    selection: t.object,
+    selectionEnabled: t.bool,
     numSelected: t.number,
     isAllSelected: t.bool.isRequired,
     columns: dataColumnsType.isRequired,
@@ -22,7 +22,7 @@ class TableHeader extends React.Component {
 
   render() {
     const {
-      selection,
+      selectionEnabled,
       numSelected,
       isAllSelected,
       columns,
@@ -32,7 +32,7 @@ class TableHeader extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          {selection.enabled &&
+          {selectionEnabled &&
             <TableCell padding="checkbox">
               <Checkbox
                 indeterminate={numSelected > 0 && !isAllSelected}
@@ -46,7 +46,7 @@ class TableHeader extends React.Component {
             <TableCell
               key={column.key}
               numeric={column.numeric}
-              padding={selection.enabled && i === 0 ? 'none' : 'default'}
+              padding={selectionEnabled && i === 0 ? 'none' : 'default'}
             >
               {column.label}
             </TableCell>

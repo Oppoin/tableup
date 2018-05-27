@@ -109,7 +109,17 @@ class Demo extends Component {
           }}
           selection={{
             enabled: true,
-            onSelectedAction: () => {}, // TODO
+            handleDelete: selected => { console.log('delete', selected); },
+            additionalActions: [
+              {
+                label: 'first',
+                handle: selected => { console.log('handle first', selected); }
+              },
+              {
+                label: 'second',
+                handle: selected => { console.log('handle second', selected); }
+              },
+            ],
           }}
           querySearch={{
             enabled: true,

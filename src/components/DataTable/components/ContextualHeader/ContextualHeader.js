@@ -13,30 +13,39 @@ import Menu from './components/Menu/Menu.js';
 
 let ContextualHeader = props => {
   const {
-    numSelected,
+    selection,
+    selected,
     classes,
   } = props;
 
   return (
     <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
+      className={classNames(classes.root, classes.highlight)}
     >
       <div className={classes.title}>
         <Typography color="inherit" variant="subheading">
-          {numSelected} selected
+          {selected.length} selected
         </Typography>
       </div>
       <div className={classes.spacer}/>
       <div className={classes.actions}>
-        <Menu/>
+        {selection.additionalActions.length > 0 &&
+          <Menu
+            actions={selection.additionalActions}
+            selected={selected}
+          />
+        }
 
-        <Tooltip title="Delete">
-          <IconButton aria-label="Delete">
-            <DeleteIcon/>
-          </IconButton>
-        </Tooltip>
+        {selection.handleDelete &&
+          <Tooltip title="Delete">
+            <IconButton
+              aria-label="Delete"
+              onClick={() => selection.handleDelete(selected)}
+            >
+              <DeleteIcon/>
+            </IconButton>
+          </Tooltip>
+        }
       </div>
     </Toolbar>
   );
@@ -44,9 +53,7 @@ let ContextualHeader = props => {
 
 ContextualHeader.propTypes = {
   title: t.string,
-  numSelected: t.number.isRequired,
-  querySearch: t.object,
-  onQuerySeach: t.func,
+  selected: t.array.isRequired,
   classes: t.object.isRequired,
 };
 

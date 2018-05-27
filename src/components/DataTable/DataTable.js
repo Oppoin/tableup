@@ -47,7 +47,8 @@ class DataTable extends React.Component {
 
         {selected.length > 0 &&
           <ContextualHeader
-            numSelected={selected.length}
+            selection={selection}
+            selected={selected}
           />
         }
 
@@ -56,7 +57,7 @@ class DataTable extends React.Component {
             aria-labelledby="datatable-title"
           >
             <TableHeader
-              selection={selection}
+              selectionEnabled={selection.enabled}
               numSelected={selected.length}
               isAllSelected={data.values.length > 0 && selected.length === data.values.length}
               columns={data.columns}
