@@ -76,6 +76,14 @@ class Demo extends Component {
     });
   }
 
+  handleDelete = selectedIds => {
+    console.log('delete', selectedIds);
+  }
+
+  handleAdditionalAction = selectedIds => {
+    console.log('additinal action', selectedIds);
+  }
+
   render() {
     return (
       <div>
@@ -109,15 +117,19 @@ class Demo extends Component {
           }}
           selection={{
             enabled: true,
-            handleDelete: selected => { console.log('delete', selected); },
+            handleDelete: this.handleDelete,
             additionalActions: [
               {
-                label: 'first',
-                handle: selected => { console.log('handle first', selected); }
+                label: 'First action',
+                handle: this.handleAdditionalAction,
               },
               {
-                label: 'second',
-                handle: selected => { console.log('handle second', selected); }
+                label: 'Second action',
+                handle: this.handleAdditionalAction,
+              },
+              {
+                label: 'Third action',
+                handle: this.handleAdditionalAction,
               },
             ],
           }}
