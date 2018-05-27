@@ -13,8 +13,9 @@ import {
   dataType,
 } from '../../shapes.js';
 
-import DataTableHeader from './components/Header/DataTableHeader.js';
-import DataTableToolbar from './components/Toolbar/DataTableToolbar.js';
+import Header from './components/Header/Header.js';
+import ContextualHeader from './components/ContextualHeader/ContextualHeader.js';
+import TableHeader from './components/TableHeader/TableHeader.js';
 import DataTablePaginationActions from './components/PaginationActions/DataTablePaginationActions.js';
 
 class DataTable extends React.Component {
@@ -38,18 +39,23 @@ class DataTable extends React.Component {
 
     return (
       <div>
-        <DataTableToolbar
+        <Header
           title={title}
-          numSelected={selected.length}
           querySearch={querySearch}
           onQuerySeach={onQuerySeach}
         />
+
+        {selected.length > 0 &&
+          <ContextualHeader
+            numSelected={selected.length}
+          />
+        }
 
         <div>
           <Table
             aria-labelledby="datatable-title"
           >
-            <DataTableHeader
+            <TableHeader
               selection={selection}
               numSelected={selected.length}
               isAllSelected={data.values.length > 0 && selected.length === data.values.length}

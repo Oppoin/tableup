@@ -11,7 +11,7 @@ import {
   dataColumnsType,
 } from '../../../../shapes.js';
 
-class DataTableHeader extends React.Component {
+class TableHeader extends React.Component {
   static propTypes = {
     selection: t.object,
     numSelected: t.number,
@@ -57,4 +57,4 @@ class DataTableHeader extends React.Component {
   }
 }
 
-export default DataTableHeader;
+export default TableHeader;

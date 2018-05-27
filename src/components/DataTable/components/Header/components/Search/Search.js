@@ -7,7 +7,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import {withStyles} from 'material-ui/styles';
 import debounce from 'lodash.debounce';
 
-class DataTableToolbarSearch extends React.Component {
+class Search extends React.Component {
   static propTypes = {
     onQuerySeach: t.func.isRequired,
     querySearchDebounceTime: t.number,
@@ -89,6 +89,7 @@ export default withStyles(theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
+    color: 'white',
   },
   searchIcon: {
     marginRight: 4,
@@ -97,4 +98,4 @@ export default withStyles(theme => ({
   clearButton: {
     cursor: 'pointer',
   },
-}))(DataTableToolbarSearch);
+}))(Search);

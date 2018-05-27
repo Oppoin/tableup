@@ -10,14 +10,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import {lighten} from 'material-ui/styles/colorManipulator';
 
-import DataTableToolbarSearch from './components/Search/DataTableToolbarSearch.js';
-
-let DataTableToolbar = props => {
+let ContextualHeader = props => {
   const {
     title,
     numSelected,
-    querySearch,
-    onQuerySeach,
     classes,
   } = props;
 
@@ -40,32 +36,19 @@ let DataTableToolbar = props => {
       </div>
       <div className={classes.spacer}/>
       <div className={classes.actions}>
-        {querySearch.enabled &&
-          <DataTableToolbarSearch
-            onQuerySeach={onQuerySeach}
-            querySearchDebounceTime={querySearch.debounceTime}
-            querySearchHintText={querySearch.hintText}
-          />
-        }
-        {/* {numSelected > 0 ?
+        {numSelected > 0 &&
           <Tooltip title="Delete">
             <IconButton aria-label="Delete">
               <DeleteIcon/>
             </IconButton>
           </Tooltip>
-          :
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon/>
-            </IconButton>
-          </Tooltip>
-        } */}
+        }
       </div>
     </Toolbar>
   );
 };
 
-DataTableToolbar.propTypes = {
+ContextualHeader.propTypes = {
   title: t.string,
   numSelected: t.number.isRequired,
   querySearch: t.object,
@@ -96,4 +79,4 @@ export default withStyles(theme => ({
   title: {
     flex: '0 0 auto',
   },
-}))(DataTableToolbar);
+}))(ContextualHeader);
