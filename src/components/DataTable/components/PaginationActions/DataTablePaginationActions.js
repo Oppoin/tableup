@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import t from 'prop-types';
+import {withStyles} from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -9,12 +9,12 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 
 class DataTablePaginationActions extends React.Component {
   static propTypes = {
-    page: PropTypes.number.isRequired,
-    count: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
-    onChangePage: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
+    page: t.number.isRequired,
+    count: t.number.isRequired,
+    rowsPerPage: t.number.isRequired,
+    onChangePage: t.func.isRequired,
+    classes: t.object.isRequired,
+    theme: t.object.isRequired,
   };
 
   handleFirstPageButtonClick = e => {
