@@ -7,12 +7,12 @@ import Typography from 'material-ui/Typography';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import FilterListIcon from '@material-ui/icons/FilterList';
 import {lighten} from 'material-ui/styles/colorManipulator';
+
+import Menu from './components/Menu/Menu.js';
 
 let ContextualHeader = props => {
   const {
-    title,
     numSelected,
     classes,
   } = props;
@@ -24,25 +24,19 @@ let ContextualHeader = props => {
       })}
     >
       <div className={classes.title}>
-        {numSelected > 0 ?
-          <Typography color="inherit" variant="subheading">
-            {numSelected} selected
-          </Typography>
-          :
-          <Typography variant="title" id="datatable-title">
-            {title}
-          </Typography>
-        }
+        <Typography color="inherit" variant="subheading">
+          {numSelected} selected
+        </Typography>
       </div>
       <div className={classes.spacer}/>
       <div className={classes.actions}>
-        {numSelected > 0 &&
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon/>
-            </IconButton>
-          </Tooltip>
-        }
+        <Menu/>
+
+        <Tooltip title="Delete">
+          <IconButton aria-label="Delete">
+            <DeleteIcon/>
+          </IconButton>
+        </Tooltip>
       </div>
     </Toolbar>
   );
@@ -74,7 +68,7 @@ export default withStyles(theme => ({
     flex: '1 1 100%',
   },
   actions: {
-    color: theme.palette.text.secondary,
+    display: 'flex',
   },
   title: {
     flex: '0 0 auto',
