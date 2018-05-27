@@ -1,6 +1,6 @@
 import React from 'react';
 import t from 'prop-types';
-import TextField from 'material-ui/TextField';
+import Input from 'material-ui/Input';
 import {InputAdornment} from 'material-ui/Input';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -61,24 +61,26 @@ class Search extends React.Component {
     return (
       <div className={classes.root}>
         <SearchIcon className={classes.searchIcon}/>
-        <TextField
-          label={querySearchHintText}
+        <Input
+          placeholder={querySearchHintText}
           margin="none"
           value={this.state.value}
           onChange={this.handleChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <ClearIcon
-                  className={classes.clearButton}
-                  style={{
-                    visibility: this.state.value.length === 0 ? 'hidden' : 'visible',
-                  }}
-                  onClick={this.handleClear}
-                />
-              </InputAdornment>
-            ),
+          classes={{
+            root: classes.inputRoot,
+            underline: classes.inputUnderline,
           }}
+          endAdornment={(
+            <InputAdornment position="end">
+              <ClearIcon
+                className={classes.clearButton}
+                style={{
+                  visibility: this.state.value.length === 0 ? 'hidden' : 'visible',
+                }}
+                onClick={this.handleClear}
+              />
+            </InputAdornment>
+          )}
         />
       </div>
     );
@@ -89,11 +91,21 @@ export default withStyles(theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    color: 'white',
+    color: theme.palette.common.white,
+  },
+  inputRoot: {
+    color: theme.palette.common.white,
+  },
+  inputUnderline: {
+    '&:before': {
+      backgroundColor: `${theme.palette.common.white} !important`,
+    },
+    '&:after': {
+      backgroundColor: theme.palette.common.white,
+    },
   },
   searchIcon: {
     marginRight: 4,
-    marginTop: 14,
   },
   clearButton: {
     cursor: 'pointer',

@@ -21,12 +21,10 @@ let Header = props => {
           id="datatable-title"
           variant="title"
           className={classes.title}
-        >
-          {title}
-        </Typography>
+        >{title}</Typography>
       </div>
       <div className={classes.spacer}/>
-      <div className={classes.actions}>
+      <div>
         {querySearch.enabled &&
           <Search
             onQuerySeach={onQuerySeach}
@@ -49,13 +47,9 @@ Header.propTypes = {
 export default withStyles(theme => ({
   root: {
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
   },
   spacer: {
     flex: '1 1 100%',
-  },
-  actions: {
-    color: theme.palette.text.secondary,
   },
   titleWrapper: {
     flex: '0 0 auto',
