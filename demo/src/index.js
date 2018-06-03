@@ -88,6 +88,9 @@ class Demo extends Component {
     return (
       <div>
         <TableUp
+          palette={{
+            'type': 'dark', // ['light' | 'dark']
+          }}
           title="My table"
           data={{
             values: this.state.data,
