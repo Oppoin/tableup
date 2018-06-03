@@ -132,6 +132,7 @@ class TableUp extends React.Component {
         <div
           style={{
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+            backgroundColor: this.theme.palette.background.default,
           }}
           {...props}
         >
