@@ -113,6 +113,8 @@ class Demo extends Component {
             //   'disabled': 'rgba(0, 0, 0, 0.26)',
             //   'disabledBackground': 'rgba(0, 0, 0, 0.12)',
             // },
+            // read more about material-ui palette here:
+            // https://material-ui.com/customization/themes/#palette
           }}
           title="My table"
           data={{
