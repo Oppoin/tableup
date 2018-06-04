@@ -55,6 +55,11 @@ class DataTable extends React.Component {
         <div>
           <Table
             aria-labelledby="datatable-title"
+            style={{
+              tableLayout: 'fixed',
+              wordWrap: 'break-word',
+              overflow: 'hidden',
+            }}
           >
             <TableHeader
               selectionEnabled={selection.enabled}

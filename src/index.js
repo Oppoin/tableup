@@ -8,10 +8,9 @@ import {
 
 import DataTable from './components/DataTable/DataTable.js';
 
-const theme = createMuiTheme();
-
 class TableUp extends React.Component {
   static propTypes = {
+    palette: t.object,
     title: t.string,
     data: dataType.isRequired,
     selection: t.object,
@@ -20,6 +19,7 @@ class TableUp extends React.Component {
   };
 
   static defaultProps = {
+    palette: undefined,
     title: '',
     data: {
       values: [],
@@ -51,6 +51,10 @@ class TableUp extends React.Component {
   state = {
     selected: [],
   };
+
+  theme = createMuiTheme({
+    palette: this.props.palette,
+  });
 
   handleSelectAllClick = (e, checked) => {
     this.setState({
@@ -114,6 +118,7 @@ class TableUp extends React.Component {
 
   render() {
     const {
+      palette,
       title,
       data,
       selection,
@@ -123,10 +128,11 @@ class TableUp extends React.Component {
     } = this.props;
 
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={this.theme}>
         <div
           style={{
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+            backgroundColor: this.theme.palette.background.default,
           }}
           {...props}
         >

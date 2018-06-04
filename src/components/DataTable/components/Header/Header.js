@@ -55,6 +55,6 @@ export default withStyles(theme => ({
     flex: '0 0 auto',
   },
   title: {
-    color: theme.palette.common.white,
+    color: theme.palette.text.primary,
   },
 }))(Header);

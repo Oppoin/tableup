@@ -88,6 +88,34 @@ class Demo extends Component {
     return (
       <div>
         <TableUp
+          palette={{
+            'type': 'dark', // ['light' | 'dark']
+            'primary': {
+              'main': '#470da0',
+            },
+            'secondary': {
+              'main': '#72ff00',
+            },
+            // 'text': {
+            //   'primary': 'rgba(0, 0, 0, 0.87)',
+            //   'secondary': 'rgba(0, 0, 0, 0.54)',
+            //   'disabled': 'rgba(0, 0, 0, 0.38)',
+            //   'hint': 'rgba(0, 0, 0, 0.38)',
+            // },
+            // 'background': {
+            //   'default': '#fafafa',
+            // },
+            // 'action': {
+            //   'active': 'rgba(0, 0, 0, 0.54)',
+            //   'hover': 'rgba(0, 0, 0, 0.08)',
+            //   'hoverOpacity': 0.08,
+            //   'selected': 'rgba(0, 0, 0, 0.14)',
+            //   'disabled': 'rgba(0, 0, 0, 0.26)',
+            //   'disabledBackground': 'rgba(0, 0, 0, 0.12)',
+            // },
+            // read more about material-ui palette here:
+            // https://material-ui.com/customization/themes/#palette
+          }}
           title="My table"
           data={{
             values: this.state.data,

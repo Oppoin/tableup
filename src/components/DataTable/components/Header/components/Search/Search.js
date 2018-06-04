@@ -91,17 +91,17 @@ export default withStyles(theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    color: theme.palette.common.white,
+    color: theme.palette.text.primary,
   },
   inputRoot: {
-    color: theme.palette.common.white,
+    color: theme.palette.text.primary,
   },
   inputUnderline: {
     '&:before': {
-      backgroundColor: `${theme.palette.common.white} !important`,
+      backgroundColor: `${theme.palette.text.primary} !important`,
     },
     '&:after': {
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: theme.palette.text.primary,
     },
   },
   searchIcon: {
