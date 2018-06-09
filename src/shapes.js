@@ -1,11 +1,23 @@
 import t from 'prop-types';
 
-export const DataTableDataItem = t.shape({
+export const dataValueType = t.shape({
   id: t.oneOfType([
     t.string,
     t.number,
   ]).isRequired,
   name: t.string,
-  status: t.string
+  status: t.string,
 });
-export const DataTableData = t.arrayOf(DataTableDataItem);
+export const dataValuesType = t.arrayOf(dataValueType);
+
+export const dataColumnType = t.shape({
+  key: t.string.isRequired,
+  label: t.string.isRequired,
+  numberic: t.bool,
+});
+export const dataColumnsType = t.arrayOf(dataColumnType);
+
+export const dataType = t.shape({
+  values: dataValuesType,
+  columns: dataColumnsType,
+});
