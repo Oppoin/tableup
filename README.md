@@ -1,4 +1,6 @@
 # TableUp
+[![Build Status](https://travis-ci.org/oppoin/tableup.svg?branch=patotoma-master)](https://travis-ci.org/oppoin/tableup)
+[![codecov](https://codecov.io/gh/oppoin/tableup/branch/patotoma-master/graph/badge.svg)](https://codecov.io/gh/oppoin/tableup)
 [![npm](https://img.shields.io/npm/v/tableup.svg?style=flat-square)]()
 [![npm](https://img.shields.io/npm/dm/tableup.svg?style=flat-square)]()
 
