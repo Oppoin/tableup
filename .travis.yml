@@ -11,6 +11,8 @@ after_success:
   - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
-# branches:
-#   only:
-#     - patotoma-master
+branches:
+  only:
+    - master
+    - kauker-master
+    - patotoma-master
