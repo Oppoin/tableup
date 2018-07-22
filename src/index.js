@@ -16,6 +16,7 @@ class TableUp extends React.Component {
     selection: t.object,
     querySearch: t.object,
     pagination: t.object,
+    onMount: t.func,
   };
 
   static defaultProps = {
@@ -55,6 +56,14 @@ class TableUp extends React.Component {
   theme = createMuiTheme({
     palette: this.props.palette,
   });
+
+  componentDidMount() {
+    this.props.onMount && this.props.onMount(() => {
+      // update handler for manually invoking re-render
+      // makes component able to be used also in non-React environment
+      this.forceUpdate();
+    });
+  }
 
   handleSelectAllClick = (e, checked) => {
     this.setState({
@@ -124,6 +133,7 @@ class TableUp extends React.Component {
       selection,
       querySearch,
       pagination,
+      onMount,
       ...props
     } = this.props;
 
