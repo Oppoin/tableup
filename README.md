@@ -19,6 +19,14 @@ import TableUp from 'tableup';
 import 'tableup/css/tableup.css';
 ```
 
+## How to run demo
+
+run `npm install` and then `npm run start`.
+
+## How to upgrade npm
+
+`npm install -g npm`
+
 ## Usage
 
 See our [demo](demo).
