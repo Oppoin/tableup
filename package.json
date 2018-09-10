@@ -1,6 +1,6 @@
 {
   "name": "tableup",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "tableup React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -41,8 +41,8 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
   },
-  "author": "",
-  "homepage": "",
+  "author": "Oppoin Pte Ltd",
+  "homepage": "https://github.com/Oppoin/tableup",
   "license": "MIT",
   "repository": "",
   "keywords": [
