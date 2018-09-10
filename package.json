@@ -1,5 +1,5 @@
 {
-  "name": "tableup",
+  "name": "@oppoin/tableup",
   "version": "0.1.2",
   "description": "tableup React component",
   "main": "lib/index.js",
