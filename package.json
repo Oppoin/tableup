@@ -23,7 +23,7 @@
     "classnames": "^2.2.5",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
-    "material-ui": "^1.0.0-beta.47"
+    "material-ui": "^1.0.0-beta.46"
   },
   "peerDependencies": {
     "react": "16.x"
