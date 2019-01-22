@@ -13,7 +13,7 @@ export const dataValuesType = t.arrayOf(dataValueType);
 export const dataColumnType = t.shape({
   key: t.string.isRequired,
   label: t.string.isRequired,
-  numberic: t.bool,
+  numeric: t.bool,
 });
 export const dataColumnsType = t.arrayOf(dataColumnType);
 
