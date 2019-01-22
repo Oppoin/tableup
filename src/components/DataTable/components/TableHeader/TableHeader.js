@@ -43,7 +43,7 @@ class TableHeader extends React.Component {
           {columns.map((column, i) =>
             <TableCell
               key={column.key}
-              numeric={column.numeric}
+              align={column.numeric ? 'right' : 'inherit'}
               padding={selectionEnabled && i === 0 ? 'none' : 'default'}
             >
               {column.label}

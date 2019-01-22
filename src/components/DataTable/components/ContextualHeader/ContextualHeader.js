@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import t from 'prop-types';
-import {withStyles} from '@material-ui/core/styles/withStyles';
+import {withStyles} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -21,7 +21,7 @@ let ContextualHeader = props => {
     <Toolbar
       className={classNames(classes.root, classes.highlight)}
     >
-      <div className={classes.title}>
+      <div className={classes.h6}>
         <Typography color="inherit" variant="subheading">
           {selected.length} selected
         </Typography>
@@ -76,7 +76,7 @@ export default withStyles(theme => ({
   actions: {
     display: 'flex',
   },
-  title: {
+  h6: {
     flex: '0 0 auto',
   },
 }))(ContextualHeader);
