@@ -1,6 +1,6 @@
 import React from 'react';
 import t from 'prop-types';
-import {withStyles} from '@material-ui/core/styles/withStyles';
+import {withStyles} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 

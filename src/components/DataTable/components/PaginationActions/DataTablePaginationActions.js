@@ -1,6 +1,6 @@
 import React from 'react';
 import t from 'prop-types';
-import {withStyles} from '@material-ui/core/styles/withStyles';
+import {withStyles} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
