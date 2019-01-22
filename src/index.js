@@ -55,6 +55,9 @@ class TableUp extends React.Component {
 
   theme = createMuiTheme({
     palette: this.props.palette,
+    typography: {
+      useNextVariants: true,
+    },
   });
 
   componentDidMount() {
