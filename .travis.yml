@@ -16,3 +16,4 @@ branches:
     - master
     - kauker-master
     - patotoma-master
+    - travisci-fix
