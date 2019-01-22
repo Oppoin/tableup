@@ -1,13 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 import t from 'prop-types';
-import {withStyles} from 'material-ui/styles';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Tooltip from 'material-ui/Tooltip';
-import IconButton from 'material-ui/IconButton';
+import {withStyles} from '@material-ui/core/styles/withStyles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {lighten} from 'material-ui/styles/colorManipulator';
 
 import Menu from './components/Menu/Menu.js';
 
@@ -64,7 +63,7 @@ export default withStyles(theme => ({
   highlight: theme.palette.type === 'light' ?
     {
       color: theme.palette.secondary.main,
-      backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      backgroundColor: theme.palette.secondary.light,
     }
     :
     {

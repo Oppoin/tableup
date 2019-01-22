@@ -1,13 +1,12 @@
 import React from 'react';
 import t from 'prop-types';
 import get from 'lodash.get';
-import Table, {
-  TableBody,
-  TableCell,
-  TablePagination,
-  TableRow,
-} from 'material-ui/Table';
-import Checkbox from 'material-ui/Checkbox';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import {
   dataType,

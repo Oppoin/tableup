@@ -1,8 +1,8 @@
 import React from 'react';
 import t from 'prop-types';
-import {withStyles} from 'material-ui/styles';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
+import {withStyles} from '@material-ui/core/styles/withStyles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 import Search from './components/Search/Search.js';
 

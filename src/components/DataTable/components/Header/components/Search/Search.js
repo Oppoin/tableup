@@ -1,10 +1,10 @@
 import React from 'react';
 import t from 'prop-types';
-import Input from 'material-ui/Input';
-import {InputAdornment} from 'material-ui/Input';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-import {withStyles} from 'material-ui/styles';
+import {withStyles} from '@material-ui/core/styles/withStyles';
 import debounce from 'lodash.debounce';
 
 class Search extends React.Component {

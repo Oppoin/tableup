@@ -1,11 +1,9 @@
 import React from 'react';
 import t from 'prop-types';
-import {
-  TableCell,
-  TableHead,
-  TableRow,
-} from 'material-ui/Table';
-import Checkbox from 'material-ui/Checkbox';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import {
   dataColumnsType,

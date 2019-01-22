@@ -1,7 +1,8 @@
 import React from 'react';
 import t from 'prop-types';
-import IconButton from 'material-ui/IconButton';
-import MuiMenu, {MenuItem} from 'material-ui/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import {Menu as MuiMenu} from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 class Menu extends React.Component {
