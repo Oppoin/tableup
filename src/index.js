@@ -1,6 +1,6 @@
 import React from 'react';
 import t from 'prop-types';
-import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 import {
   dataType,
