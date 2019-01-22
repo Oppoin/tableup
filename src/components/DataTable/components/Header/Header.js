@@ -19,8 +19,8 @@ let Header = props => {
       <div className={classes.titleWrapper}>
         <Typography
           id="datatable-title"
-          variant="title"
-          className={classes.title}
+          variant="h6"
+          className={classes.h6}
         >{title}</Typography>
       </div>
       <div className={classes.spacer}/>
@@ -54,7 +54,7 @@ export default withStyles(theme => ({
   titleWrapper: {
     flex: '0 0 auto',
   },
-  title: {
+  h6: {
     color: theme.palette.text.primary,
   },
 }))(Header);
