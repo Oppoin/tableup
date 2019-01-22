@@ -4,7 +4,7 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-import {withStyles} from '@material-ui/core/styles/withStyles';
+import {withStyles} from '@material-ui/core/styles';
 import debounce from 'lodash.debounce';
 
 class Search extends React.Component {
