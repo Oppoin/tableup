@@ -90,7 +90,7 @@ class DataTable extends React.Component {
                         <TableCell
                           key={column.key}
                           padding={i === 0 ? 'none' : 'default'}
-                          numeric={column.numeric}
+                          align={column.numeric ? 'right' : 'inherit'}
                         >{get(item, column.key)}</TableCell>
                       )}
                     </TableRow>
