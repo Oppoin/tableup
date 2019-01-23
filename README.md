@@ -6,6 +6,14 @@
 
 Data table that conforms to [Google Material Design](https://material.io/design/).
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Importing](#importing)
+- [Usage](#usage)
+- [Upgrade](#upgrade)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```
@@ -19,17 +27,16 @@ import TableUp from 'tableup';
 import 'tableup/css/tableup.css';
 ```
 
-## How to run demo
-
-run `npm install` and then `npm run start`.
-
-## How to upgrade npm
-
-`npm install -g npm`
-
 ## Usage
 
-See our [demo](demo).
+### Demo
+`npm install` then `npm run start`
+
+See our [demo](demo) for code files
+
+## Upgrade
+
+`npm install -g npm`
 
 ## Contributing
 
